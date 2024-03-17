@@ -1,13 +1,11 @@
-
 package com.example.sbstest;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,64 +17,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+public class Inquiry extends AppCompatActivity {
 
-
-public class MainActivity extends AppCompatActivity {
-
-    Button submitOrderButton;
-    Button bookstoreButton;
     String scanned;
-
-    //Importing database
-    private static DatabaseReference database;
+    Button scanButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_inquiry);
 
-
-        setContentView(R.layout.activity_main);
-
-        bookstoreButton=findViewById(R.id.bookStoreButton);
-        bookstoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Switch to the new view
-                Intent intent = new Intent(MainActivity.this, BookStore.class);
-                startActivity(intent);
-            }
-        });
-        //scanbutton=findViewById(R.id.scanButton);
-        /*
-        gotoscanButton.setOnClickListener(v->
-        {
-            setContentView(R.layout.home_screen);
-            //setContentView(R.layout.activity_main);
-            //Can call from any button and it will work
-            //View does not matter.
-            //scanCode();
-            //scanButton=findViewById(R.id.scanButton);
-
-        });*/
-
-        /*
+        scanButton=findViewById(R.id.scanButton);
         scanButton.setOnClickListener(v->
         {
             scanCode();
 
-        });*/
-    }
-
-    private void scanCode(){
-        ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up to turn the flash on");
-        options.setBeepEnabled(true);
-        options.setOrientationLocked(true);
-        options.setCaptureActivity(CaptureAct.class);
-
-        barLauncher.launch(options);
-
-
+        });
     }
 
     //Search is called after scan. Initiates a SearchBoook object, launches query to database based on isbn
@@ -118,17 +74,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       }
+    }
 
+
+    private void scanCode(){
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to turn the flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+
+        barLauncher.launch(options);
+    }
 
     //Barcode Functionality
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
     {
         if(result.getContents() != null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Result");
+            //AlertDialog.Builder builder = new AlertDialog.Builder(Inquiry.this);
+            //builder.setTitle("Result");
             scanned = result.getContents();
-            builder.setMessage(scanned);
+            //builder.setMessage(scanned);
             /*
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
