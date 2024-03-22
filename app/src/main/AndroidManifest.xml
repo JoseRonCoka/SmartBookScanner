@@ -15,6 +15,9 @@
         android:theme="@style/Theme.SBSTest"
         tools:targetApi="31">
         <activity
+            android:name=".SubmitOrder"
+            android:exported="false" />
+        <activity
             android:name=".BookStore"
             android:exported="false" />
         <activity

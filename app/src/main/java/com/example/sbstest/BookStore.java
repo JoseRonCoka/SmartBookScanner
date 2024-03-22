@@ -31,16 +31,6 @@ public class BookStore extends AppCompatActivity {
             }
         });
 
-        /*
-        ordersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Switch to the new view
-                Intent intent = new Intent(BookStore.this, ProcessOrders.class);
-                startActivity(intent);
-            }
-        });
-        */
 
     }
 }

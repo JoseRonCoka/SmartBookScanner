@@ -42,7 +42,7 @@ public class Inquiry extends AppCompatActivity {
 
         SearchBook scannedBook = new SearchBook(scanned);
         DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Books");
         TextView textView2 = findViewById(R.id.textView2);
 
         mDatabase.child(scanned).addListenerForSingleValueEvent(new ValueEventListener() {

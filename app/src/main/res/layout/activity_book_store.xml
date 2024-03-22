@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/incomingOrdersButtton"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
         android:layout_marginStart="17dp"
         android:layout_marginBottom="216dp"
         android:text="Orders "

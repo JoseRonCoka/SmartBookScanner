@@ -43,11 +43,11 @@ public class SearchBook {
 
     @Override
     public String toString() {
-        return "Book Result '\n" +
-                "ISBN='" + isbn + '\n' +
-                "Iitle='" + title + '\n' +
-                "Author='" + author + '\n' +
-                "Price='" + price + '\n';
+        return "Book Result \n" +
+                "ISBN= " + isbn + '\n' +
+                "Title= " + title + '\n' +
+                "Author= " + author + '\n' +
+                "Price= $" + price + '\n';
     }
 }
 
