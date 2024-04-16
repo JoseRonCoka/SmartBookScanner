@@ -8,11 +8,13 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="233dp"
-        android:layout_height="163dp"
+        android:layout_width="366dp"
+        android:layout_height="189dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="20dp"
         android:text="Please Enter Your Order "
         android:textAlignment="center"
-        android:textSize="10sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -26,11 +28,11 @@
         android:layout_height="298dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="36dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
@@ -78,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Quantity of Book"
+            android:hint="Number of Copies of Book"
             android:inputType="number" />
     </LinearLayout>
 

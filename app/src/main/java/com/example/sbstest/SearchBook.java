@@ -13,6 +13,13 @@ public class SearchBook {
         author = "";
         price = "";
     }
+
+    SearchBook(String scanned, String t, String a, String p){
+        isbn = scanned;
+        title =t;
+        author =a;
+        price =p;
+    }
     public String getTitle() {
         return title;
     }

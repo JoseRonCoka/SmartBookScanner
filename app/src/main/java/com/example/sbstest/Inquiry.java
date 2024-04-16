@@ -38,7 +38,7 @@ public class Inquiry extends AppCompatActivity {
     //Search is called after scan. Initiates a SearchBoook object, launches query to database based on isbn
     //Extract information from result pass to object. The To String displayed on App.
     //HAVE TO HANDLE NEW BOOK ADD TO DATABASE
-    private void search() {
+    public void search() {
 
         SearchBook scannedBook = new SearchBook(scanned);
         DatabaseReference mDatabase;
