@@ -1,11 +1,17 @@
+//Project: SBS
+//Author: Jose Ron Coka
+//File: BookStore.java
+//Version: Working Prototype 1
+//Date: 04/16/2024
+
+
 package com.example.sbstest;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 
 public class SubmitOrder extends AppCompatActivity {
 
+    //Initialize View Elements
     Button submitOrderButton;
 
     EditText customerName;
@@ -31,7 +38,9 @@ public class SubmitOrder extends AppCompatActivity {
 
     EditText quantityBook;
 
+    //Hanldling Fee set to 5 USD
     double handlingFee=5.00;
+    double tax=0.07;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +49,6 @@ public class SubmitOrder extends AppCompatActivity {
 
         submitOrderButton = findViewById(R.id.submitButton);
 
-        //EditText input
         customerName= findViewById(R.id.nameInput);
         emailAddress= findViewById(R.id.emailInput);
         customerPhone= findViewById(R.id.phoneInput);
@@ -50,10 +58,13 @@ public class SubmitOrder extends AppCompatActivity {
 
         TextView textView4 = findViewById(R.id.textView4);
 
-        //Database reference
+        //Database reference  to Book side.
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Books");
+        //Database reference to Order side
+        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders"); // Reference to the "Orders" category
 
+        //On CLick of submit button information in input fields is saved
         submitOrderButton.setOnClickListener(v->
         {
             String name = customerName.getText().toString();
@@ -62,36 +73,36 @@ public class SubmitOrder extends AppCompatActivity {
             String address = customerAddress.getText().toString();
             String isbn = bookISBN.getText().toString();
             String quantity = quantityBook.getText().toString();
-            DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders"); // Reference to the "Orders" category
+
             //check database  for isbn before posting order
             mDatabase.child(isbn).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists())
                     {
+
+                        //Extract book info from database, name and price
                         String title = snapshot.child("name").getValue(String.class);
                         String p= snapshot.child("price").getValue(String.class);
 
                         double price = Double.parseDouble(p);
                         double q= Double.parseDouble(quantity);
-                        double calculatePrice= (price*q)+(price*q*0.07)+handlingFee;
-                        String totalPrice = String.format("%.2f", calculatePrice);
 
+                        //Calculate Total order price
+                        String totalPrice = String.format("%.2f", calculatePrice(price,q));
 
+                        //Alert Dialog for User to confirm order
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SubmitOrder.this);
                         alertDialogBuilder.setTitle("Confirm Order");
                         alertDialogBuilder.setMessage("Do you want to place an order for: '"+quantity+ "' copies of '" + title + " with an individual price of $"+p+" for total order price of $"+totalPrice+"'?");
                         alertDialogBuilder.setPositiveButton("OK", (dialogInterface, i) -> {
 
-                            //Create SearchBook object with database info
-                            /*
-                            String author = snapshot.child("author").getValue(String.class);
-                            String price = snapshot.child("price").getValue(String.class);
-                            SearchBook orderedBook = new SearchBook(isbn, title, author, price);
-                            */
                             String orderId = ordersRef.push().getKey(); // Generate unique key for order
+
+                            //Create Order object from the input info
                             Order customerOrder = new Order(orderId, name, email, phone, address, isbn, totalPrice, quantity);
 
+                            //Push the order object into the database
                             ordersRef.child(orderId).setValue(customerOrder)
                                     .addOnSuccessListener(aVoid -> {
                                         //textView4.setText("Order submitted successfully, your Order Details: "+customerOrder.toString()+" Order Number: " + orderId);
@@ -119,7 +130,7 @@ public class SubmitOrder extends AppCompatActivity {
                     }
                     else
                     {
-                        //Need to Implement Handling. Form Submission of books.
+
                         textView4.setText("Book not inside Database. Please place an order for a different Book.");
                         bookISBN.setText("");
                         quantityBook.setText("");
@@ -136,5 +147,10 @@ public class SubmitOrder extends AppCompatActivity {
 
 
 
+    }
+
+    //Helper function to calculate price
+    public  double calculatePrice(double price, double q) {
+        return (price*q)+(price*q*tax)+handlingFee;
     }
 }

@@ -1,12 +1,25 @@
+//Project: SBS
+//Author: Jose Ron Coka
+//File: SearchBook.java
+//Version: Working Prototype 1
+//Date: 04/16/2024
+
+
+
 package com.example.sbstest;
+
+
+//SearchBook class represent a Book object
 
 public class SearchBook {
 
+    //Elements of the SearchBook object
     private String isbn;
     private String title;
     private String author;
-
     private String price;
+
+    //Constructors
     SearchBook(String scanned){
         isbn = scanned;
         title ="";

@@ -1,31 +1,31 @@
+//Project: SBS
+//Author: Jose Ron Coka
+//File: Order.java
+//Version: Working Prototype 1
+//Date: 04/16/2024
+
+
+
 package com.example.sbstest;
-
-
-import android.widget.EditText;
 
 import java.io.Serializable;
 
+//Creates an Order Object
+
 public class Order implements Serializable {
 
-
+    //Order Object elements
     private String customerName;
     private String emailAddress;
-
     private String customerPhone;
     private String customerAddress;
     private String bookISBN;
-
     private String quantityBook;
-
-    public SearchBook bookObject;
-
     private String orderID;
     private String bookTitle;
     private String bookAuthor;
-
     private String orderCost;
     private String bookPrice;
-
 
 
     Order(String name, String email,String phone, String address, String book, String quantity ){
@@ -38,9 +38,6 @@ public class Order implements Serializable {
 
     }
 
-    public String getOrderCost() {
-        return orderCost;
-    }
 
     Order(String ID, String name, String email, String phone, String address, String book, String orderPrice, String quantity ){
         orderID = ID;
@@ -55,9 +52,11 @@ public class Order implements Serializable {
         orderCost = orderPrice;
         quantityBook = quantity;
     }
+    //Getters and Setters
 
-
-
+    public String getOrderCost() {
+        return orderCost;
+    }
     public String getBookTitle() {
         return bookTitle;
     }
@@ -69,20 +68,13 @@ public class Order implements Serializable {
     public String getBookPrice() {
         return bookPrice;
     }
-
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
+    public String getBookISBN() {
+        return bookISBN;
     }
 
-    public void setBookAuthor(String bookAuthor) {
-        this.bookAuthor = bookAuthor;
+    public String getQuantityBook() {
+        return quantityBook;
     }
-
-    public void setBookPrice(String bookPrice) {
-        this.bookPrice = bookPrice;
-    }
-
-
     public String getOrderID() {
         return orderID;
     }
@@ -103,15 +95,18 @@ public class Order implements Serializable {
         return customerAddress;
     }
 
-    public String getBookISBN() {
-        return bookISBN;
+
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
     }
 
-    public String getQuantityBook() {
-        return quantityBook;
+    public void setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
     }
 
-    //Set method in case Order needs to be modified.
+    public void setBookPrice(String bookPrice) {
+        this.bookPrice = bookPrice;
+    }
     public void setBookISBN(String bookISBN) {
         this.bookISBN = bookISBN;
     }
@@ -124,6 +119,7 @@ public class Order implements Serializable {
         this.emailAddress = emailAddress;
     }
 
+    //Helper Function to print out Book details
     public String displayBookInfo(){
         return "Book  \n" +
                 "ISBN= " + bookISBN+ '\n' +
@@ -131,7 +127,7 @@ public class Order implements Serializable {
                 "Author= " + bookAuthor + '\n' +
                 "Price= $" + bookPrice + '\n';
     }
-
+    //To String Method to print out Order Details
     @Override
     public String toString() {
         return "Order Details: \n" +

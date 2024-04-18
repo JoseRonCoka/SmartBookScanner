@@ -8,23 +8,24 @@
 
     <TextView
         android:id="@+id/idTextView"
-        android:layout_width="323dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="360dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="30dp"
         android:text="Order: "
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/orderDetailsTextView"
-        android:layout_width="325dp"
-        android:layout_height="124dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="323dp"
+        android:layout_height="132dp"
+        android:layout_marginTop="20dp"
         android:text="Order Details:"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idTextView" />
@@ -35,6 +36,7 @@
         android:layout_height="123dp"
         android:layout_marginTop="20dp"
         android:text="Book Details:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/orderDetailsTextView" />
@@ -47,6 +49,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:text="Number of Copies to Scan: "
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +58,8 @@
 
     <Button
         android:id="@+id/processScan"
-        android:layout_width="110dp"
-        android:layout_height="56dp"
+        android:layout_width="220dp"
+        android:layout_height="72dp"
         android:layout_marginTop="30dp"
         android:text="Scan"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +74,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:text="Number of Copies Scanned:"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toScanNum" />
@@ -96,6 +102,7 @@
         android:inputType="number"
         android:text="1"
         android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />

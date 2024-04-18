@@ -8,40 +8,41 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="41dp"
         android:text="Welcome to SBS"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/bookStoreButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="269dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginBottom="302dp"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="65dp"
         android:text="Book Store"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.545" />
+        app:layout_constraintTop_toBottomOf="@+id/placeOrderButton" />
 
     <Button
         android:id="@+id/placeOrderButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="65dp"
         android:text="Submit Order"
-        app:layout_constraintBottom_toTopOf="@+id/bookStoreButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

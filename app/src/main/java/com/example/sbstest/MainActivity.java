@@ -1,8 +1,8 @@
 //Project: SBS
 //Author: Jose Ron Coka
-//Version: Inquiry Implemented, App Flow created.
-//Date: 03/17/2024
-
+//File: MainActivity
+//Version: Working Prototype 1
+//Date: 04/16/2024
 
 
 package com.example.sbstest;
@@ -18,6 +18,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Initialize Buttons
     Button placeOrderButton;
     Button bookstoreButton;
 
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         placeOrderButton=findViewById(R.id.placeOrderButton);
         bookstoreButton=findViewById(R.id.bookStoreButton);
+
+        //Button to go to Bookstore Side of App
         bookstoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Button to go to Submit Order Activity
         placeOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

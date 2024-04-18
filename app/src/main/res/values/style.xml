@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize theme here -->
+        <item name="android:windowBackground">@color/light_gray</item>
+        <item name="android:textColor">@color/black</item> <!-- Text color for your app -->
+        <item name="colorPrimary">@color/primary_blue</item> <!-- Primary color for your menus and buttons -->
+        <item name="colorPrimaryDark">@color/primary_blue</item> <!-- Darker shade of primary color for status bar -->
+        <item name="colorAccent">@color/primary_blue</item> <!-- Accent color for UI elements -->
+        <item name="android:buttonStyle">@style/PrimaryButtonStyle</item><!-- Add Button Style to theme -->
+        <item name="android:textAppearance">@style/AppTextAppearance</item>
+
+
+    </style>
+    <!-- Button Style -->
+    <style name="PrimaryButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/primary_button_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">20dp</item>
+        <!-- Padding  -->
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <!-- Corner radius -->
+        <item name="android:radius">4dp</item>
+    </style>
+
+    <style name="AppTextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+
+</resources>

@@ -1,3 +1,10 @@
+//Project: SBS
+//Author: Jose Ron Coka
+//File: BookStore.java
+//Version: Working Prototype 1
+//Date: 04/16/2024
+
+
 package com.example.sbstest;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +28,7 @@ public class BookStore extends AppCompatActivity {
         inquiryButton=findViewById(R.id.inquiryButton);
         ordersButton=findViewById(R.id.incomingOrdersButtton);
 
-
+        //Button for Inquiry Activity
         inquiryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,7 +37,7 @@ public class BookStore extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //Button for incoming order activity
         ordersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

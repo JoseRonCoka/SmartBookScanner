@@ -12,7 +12,7 @@
         android:layout_height="189dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="20dp"
-        android:text="Please Enter Your Order "
+        android:text="Please Enter Your Order: "
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
@@ -24,15 +24,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="381dp"
+        android:layout_width="369dp"
         android:layout_height="298dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="36dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
@@ -86,9 +85,9 @@
 
     <Button
         android:id="@+id/submitButton"
-        android:layout_width="98dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="96dp"
+        android:layout_width="220dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="70dp"
         android:text="Submit "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

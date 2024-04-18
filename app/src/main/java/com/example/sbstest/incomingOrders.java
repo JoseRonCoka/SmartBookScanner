@@ -1,3 +1,9 @@
+//Project: SBS
+//Author: Jose Ron Coka
+//File: IncomingOrder.java
+//Version: Working Prototype 1
+//Date: 04/16/2024
+
 package com.example.sbstest;
 
 import androidx.annotation.NonNull;
@@ -20,36 +26,35 @@ import java.util.ArrayList;
 
 public class incomingOrders extends AppCompatActivity implements RecyclerViewInterface {
 
+    //Start Array to Store Order Objects
     ArrayList<Order> incomingOrderList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_incoming_orders);
 
         //Start Recycler View
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
 
-        //Save into array of Order objects
-        //ArrayList<Order> incomingOrderList = new ArrayList<>();
-
-        //Extract all incoming orders from database
+        //Database references
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders");
         DatabaseReference booksRef;
         booksRef = FirebaseDatabase.getInstance().getReference().child("Books");
 
+        //Start Recycler View
         io_RecyclerViewAdapter adapter = new io_RecyclerViewAdapter(this, incomingOrderList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         //TextView test = findViewById(R.id.bookDetailsTV);
-
+        //Extract all incoming orders from database
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //incomingOrderList.clear(); // Clear the list before populating again
+                incomingOrderList.clear(); // Clear the list before populating again
 
                 for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
                     // Extract order data from the snapshot
@@ -59,17 +64,15 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
                     //test.setText(name);
                     String email = orderSnapshot.child("emailAddress").getValue(String.class);
                     String phone = orderSnapshot.child("customerPhone").getValue(String.class);
-
                     String address = orderSnapshot.child("customerAddress").getValue(String.class);
-
                     String book = orderSnapshot.child("bookISBN").getValue(String.class);
                     String orderCost = orderSnapshot.child("orderCost").getValue(String.class);
                     String quantity = orderSnapshot.child("quantityBook").getValue(String.class);
 
-                    // Create an Order object and add it to the list
+                    // Create an Order object with the data extracted
                     Order incomingOrder = new Order(orderID, name, email, phone, address, book, orderCost, quantity);
 
-
+                    //Extract Book information and add data to order object
                     booksRef.child(book).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -80,8 +83,6 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
 
                             String price = snapshot.child("price").getValue(String.class);
                             incomingOrder.setBookPrice(price);
-
-
                         }
 
                         @Override
@@ -89,8 +90,7 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
                             // Handle error
                         }
                     });
-
-
+                    //Add Order object to the list
                     incomingOrderList.add(incomingOrder);
                     //test.setText(incomingOrderList.toString());
                 }
@@ -104,96 +104,9 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
             }
         });
 
-        /*
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //incomingOrderList.clear(); // Clear the list before populating again
-
-                for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
-                    // Extract order data from the snapshot
-                    String orderID = orderSnapshot.getKey();
-                    //test.setText(orderID);
-                    String name = orderSnapshot.child("customerName").getValue(String.class);
-                    //test.setText(name);
-                    String email = orderSnapshot.child("emailAddress").getValue(String.class);
-                    String phone = orderSnapshot.child("customerPhone").getValue(String.class);
-
-                    String address = orderSnapshot.child("customerAddress").getValue(String.class);
-
-                    String book = orderSnapshot.child("bookISBN").getValue(String.class);
-                    String quantity = orderSnapshot.child("quantityBook").getValue(String.class);
-
-                    // Create an Order object and add it to the list
-                    Order incomingOrder = new Order(orderID, name, email, phone, address, book, quantity);
-
-                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            //incomingOrderList.clear(); // Clear the list before populating again
-
-                            for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
-                                // Extract order data from the snapshot
-                                String orderID = orderSnapshot.getKey();
-                                //test.setText(orderID);
-                                String name = orderSnapshot.child("customerName").getValue(String.class);
-                                //test.setText(name);
-                                String email = orderSnapshot.child("emailAddress").getValue(String.class);
-                                String phone = orderSnapshot.child("customerPhone").getValue(String.class);
-
-                                String address = orderSnapshot.child("customerAddress").getValue(String.class);
-
-                                String book = orderSnapshot.child("bookISBN").getValue(String.class);
-                                String quantity = orderSnapshot.child("quantityBook").getValue(String.class);
-
-                                // Create an Order object and add it to the list
-                                Order incomingOrder = new Order(orderID, name, email, phone, address, book, quantity);
-
-
-                                booksRef.child(book).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        String title = snapshot.child("name").getValue(String.class);
-                                        incomingOrder.bookObject.setTitle(title);
-                                        String author = snapshot.child("author").getValue(String.class);
-                                        incomingOrder.bookObject.setAuthor(author);
-                                        String price = snapshot.child("price").getValue(String.class);
-                                        incomingOrder.bookObject.setPrice(price);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        // Handle error
-                                    }
-                                });
-
-
-
-                                //test.setText(incomingOrder.toString());
-                                incomingOrderList.add(incomingOrder);
-                                //test.setText(incomingOrderList.toString());
-                            }
-                            adapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            // Handle any errors
-                            Log.e("Firebase", "Error fetching incoming orders: " + databaseError.getMessage());
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-         */
     }
 
+    //Handle when order is clicked inside recycler view. Go to Process Order with that Order object info.
     @Override
     public void onItemClick(int position) {
 

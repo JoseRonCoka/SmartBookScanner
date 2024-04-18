@@ -1,3 +1,9 @@
+//Project: SBS
+//Author: Jose Ron Coka
+//File: RecyclerViewAdapter.java
+//Version: Working Prototype 1
+//Date: 04/16/2024
+
 package com.example.sbstest;
 
 import android.content.Context;
@@ -52,7 +58,7 @@ public class io_RecyclerViewAdapter extends RecyclerView.Adapter<io_RecyclerView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView orderNumber, orderDetails, bookDetails;
+        TextView orderNumber, orderDetails;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
