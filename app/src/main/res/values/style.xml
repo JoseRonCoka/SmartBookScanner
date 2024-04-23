@@ -10,6 +10,7 @@
         <item name="colorAccent">@color/primary_blue</item> <!-- Accent color for UI elements -->
         <item name="android:buttonStyle">@style/PrimaryButtonStyle</item><!-- Add Button Style to theme -->
         <item name="android:textAppearance">@style/AppTextAppearance</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
 
 
     </style>
@@ -31,6 +32,12 @@
 
     <style name="AppTextAppearance">
         <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- Alert Dialog Theme -->
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/primary_blue</item> <!-- Accent color for alert dialog -->
+        <!-- Customize other attributes of the alert dialog theme as needed -->
     </style>
 
 
