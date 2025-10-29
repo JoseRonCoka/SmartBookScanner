@@ -60,9 +60,10 @@
         android:id="@+id/processScan"
         android:layout_width="220dp"
         android:layout_height="72dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="36dp"
         android:text="Scan"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.769"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scannedNum" />
 
@@ -106,4 +107,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <Button
+        android:id="@+id/testProcessButton"
+        android:layout_width="93dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="48dp"
+        android:text="Test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/processScan"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

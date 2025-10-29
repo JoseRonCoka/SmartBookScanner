@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,29 +28,36 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
     //Start Array to Store Order Objects
     ArrayList<Order> incomingOrderList = new ArrayList<>();
 
+    //Database references
+    DatabaseReference bDatabase;
+    DatabaseReference booksRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_incoming_orders);
 
-        //Start Recycler View
-        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
+        populateOrders();
 
-        //Database references
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders");
-        DatabaseReference booksRef;
+    }
+
+    public void populateOrders(){
+
+        bDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders");
+
         booksRef = FirebaseDatabase.getInstance().getReference().child("Books");
 
         //Start Recycler View
+        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
         io_RecyclerViewAdapter adapter = new io_RecyclerViewAdapter(this, incomingOrderList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //TextView test = findViewById(R.id.bookDetailsTV);
         //Extract all incoming orders from database
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        //mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        //Using Value Event Listener instead of single so the list is updated in case something changes in firebase.
+        bDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 incomingOrderList.clear(); // Clear the list before populating again
@@ -66,13 +72,20 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
                     String phone = orderSnapshot.child("customerPhone").getValue(String.class);
                     String address = orderSnapshot.child("customerAddress").getValue(String.class);
                     String book = orderSnapshot.child("bookISBN").getValue(String.class);
+                    String title= orderSnapshot.child("bookTitle").getValue(String.class);
+                    String price= orderSnapshot.child("bookPrice").getValue(String.class);
+                    String author= orderSnapshot.child("bookAuthor").getValue(String.class);
                     String orderCost = orderSnapshot.child("orderCost").getValue(String.class);
-                    String quantity = orderSnapshot.child("quantityBook").getValue(String.class);
+                    //String quantityText = orderSnapshot.child("quantityBook").getValue(String.class);
+                    int quantity = orderSnapshot.child("quantityBook").getValue(Integer.class);
+                    //int quantity = Integer.parseInt(quantityText);
+                    String orderDate= orderSnapshot.child("orderDate").getValue(String.class);
 
                     // Create an Order object with the data extracted
-                    Order incomingOrder = new Order(orderID, name, email, phone, address, book, orderCost, quantity);
+                    Order incomingOrder = new Order(orderID, name, email, phone, address, book, title, author, price, orderCost, quantity, orderDate);
 
-                    //Extract Book information and add data to order object
+                    //Used to extract book data from database, not needed anymore since book info is saved with order.
+                    /*
                     booksRef.child(book).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -83,6 +96,7 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
 
                             String price = snapshot.child("price").getValue(String.class);
                             incomingOrder.setBookPrice(price);
+                            //adapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -90,6 +104,8 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
                             // Handle error
                         }
                     });
+
+                     */
                     //Add Order object to the list
                     incomingOrderList.add(incomingOrder);
                     //test.setText(incomingOrderList.toString());
@@ -116,4 +132,12 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
         startActivity(intent);
 
     }
+    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+       populateOrders(); // your method to fetch from Firebase
+    }
+
+     */
 }

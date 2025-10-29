@@ -39,6 +39,9 @@ public class processOrders extends AppCompatActivity {
 
     Button scanProcessButton;
 
+    //TEST BUTTON
+    Button testProcessButton;
+
     String scanned;
 
 
@@ -48,6 +51,7 @@ public class processOrders extends AppCompatActivity {
 
     Order orderToProcess;
     SearchBook bookToProcess;
+    private Scanner scannerHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +80,10 @@ public class processOrders extends AppCompatActivity {
 
             //Set Num Copies to scan
             toScanNum = findViewById((R.id.toScanNum));
-            toScanNum.setText(orderToProcess.getQuantityBook());
-            copiesToScan=Integer.parseInt(orderToProcess.getQuantityBook());
-
+            copiesToScan=orderToProcess.getQuantityBook();
+            toScanNum.setText(String.valueOf(copiesToScan));
+            //copiesToScan=Integer.parseInt(orderToProcess.getQuantityBook());
+            copiesToScan=orderToProcess.getQuantityBook();
 
             //Set Num scanned copies
             scannedNum= findViewById((R.id.scannedNum));
@@ -89,34 +94,69 @@ public class processOrders extends AppCompatActivity {
         scanProcessButton= findViewById((R.id.processScan));
         scanProcessButton.setOnClickListener(v->
         {
-            scanCode();
+            //scanCode();
+            scannerHelper = new Scanner();
+            barLauncher.launch( scannerHelper.getScanOptions());
         });
 
-
+        //Initiate Button
+        testProcessButton= findViewById((R.id.testProcessButton));
+        testProcessButton.setOnClickListener(v->{
+            testProcess();
+        });
     }
 
-    //ScanCode function sets scanner functionality
-    private void scanCode() {
-        ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up to turn the flash on");
-        options.setBeepEnabled(true);
-        options.setOrientationLocked(true);
-        options.setCaptureActivity(CaptureAct.class);
+    //Test Process
+    private void testProcess(){
+        //Process Button test
 
-        barLauncher.launch(options);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(processOrders.this);
+        alertDialogBuilder.setTitle("All elements for order have been Scanned");
+        alertDialogBuilder.setMessage("Do you want to complete the order and Process Payment?");
+        alertDialogBuilder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            orderID.setText("Order was completed. Good Job!");
+
+            //Database references
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders"); // Reference to the "Orders" category
+            DatabaseReference processRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("ProcessedOrders");
+
+            //Access Database to Move Order from Incoming Orders to Processed Orders
+            mDatabase.child(orderToProcess.getOrderID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Order data = snapshot.getValue(Order.class);
+                        //Object data = snapshot.getValue();
+                        // Write the data to the destination location
+                        processRef.child(orderToProcess.getOrderID()).setValue(data);
+                        // Delete the data from the source location.
+                        snapshot.getRef().removeValue();
+
+                        //Intent changed so App goes back to Incoming Orders and cannot return to order
+                        Intent intent = new Intent(processOrders.this, incomingOrders.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        //Code will never get here
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+            orderID.setText("Order was not completed. Start Scanning again");
+            copiesScanned=0;
+            scannedNum.setText(copiesScanned);
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
-
-    //Barcode Functionality if something is scanned calls check function
-    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
-    {
-        if(result.getContents() != null) {
-            scanned = result.getContents();
-        }
-        else{
-            return;
-        }
-        check();
-    });
 
     //Check function validates the scan
     private void check(){
@@ -142,7 +182,7 @@ public class processOrders extends AppCompatActivity {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders"); // Reference to the "Orders" category
                 DatabaseReference processRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("ProcessedOrders");
 
-                //Acces Database to Move Order from Incoming Orders to Processed Orders
+                //Access Database to Move Order from Incoming Orders to Processed Orders
                mDatabase.child(orderToProcess.getOrderID()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -182,8 +222,17 @@ public class processOrders extends AppCompatActivity {
 
     }
 
-
-
+    //Barcode Functionality if something is scanned calls check function
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() != null) {
+            scanned = result.getContents();
+        }
+        else{
+            return;
+        }
+        check();
+    });
 
     /*Extract database book info
             public void extractBook (String isbn) {
@@ -216,10 +265,6 @@ public class processOrders extends AppCompatActivity {
 
                     }
                 });
-
-
-
             }
-
      */
 }

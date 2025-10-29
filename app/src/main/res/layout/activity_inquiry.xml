@@ -5,30 +5,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/submitInquiryButton"
+        android:layout_width="193dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="44dp"
+        android:text="Submit Inquiry"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="355dp"
-        android:layout_height="387dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="67dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="48dp"
+        android:id="@+id/displayText"
+        android:layout_width="341dp"
+        android:layout_height="283dp"
+        android:layout_marginTop="28dp"
         android:text="Scan the Book you want to Inquire: "
         android:textAlignment="center"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/scanButton"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/scanButton"
-        android:layout_width="220dp"
-        android:layout_height="72dp"
-        android:layout_marginBottom="51dp"
-        android:text="Scan "
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="367dp"
+        android:layout_height="234dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/displayText">
+
+        <TextView
+            android:id="@+id/isbnInputInstructions2"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Enter the ISBN manually or by scanning the barcode."
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <EditText
+            android:id="@+id/isbnInquiryInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:ems="10"
+            android:hint="ISBN"
+            android:inputType="number" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <Button
+            android:id="@+id/scanButton"
+            android:layout_width="210dp"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:text="Scan " />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

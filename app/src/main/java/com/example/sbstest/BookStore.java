@@ -16,8 +16,12 @@ import android.widget.Button;
 
 public class BookStore extends AppCompatActivity {
 
-    Button inquiryButton;
+    Button bookInquiryButton;
     Button ordersButton;
+
+    Button orderInquiryButton;
+
+    Button submitBookActivityButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,13 @@ public class BookStore extends AppCompatActivity {
 
         setContentView(R.layout.activity_book_store);
 
-        inquiryButton=findViewById(R.id.inquiryButton);
+        bookInquiryButton=findViewById(R.id.inquiryButton);
         ordersButton=findViewById(R.id.incomingOrdersButtton);
+        orderInquiryButton=findViewById(R.id.orderInquiryButton);
+        submitBookActivityButton=findViewById(R.id.submitBookActivityButton);
 
         //Button for Inquiry Activity
-        inquiryButton.setOnClickListener(new View.OnClickListener() {
+        bookInquiryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Switch to the new view
@@ -43,6 +49,24 @@ public class BookStore extends AppCompatActivity {
             public void onClick(View v) {
                 // Switch to the new view
                 Intent intent = new Intent(BookStore.this, incomingOrders.class);
+                startActivity(intent);
+            }
+        });
+
+        orderInquiryButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // Switch to the new view
+                Intent intent = new Intent(BookStore.this, orderInquiry.class);
+                startActivity(intent);
+            }
+        });
+
+        submitBookActivityButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // Switch to the new view
+                Intent intent = new Intent(BookStore.this, SubmitBook.class);
                 startActivity(intent);
             }
         });

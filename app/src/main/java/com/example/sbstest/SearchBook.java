@@ -19,6 +19,8 @@ public class SearchBook {
     private String author;
     private String price;
 
+    private int quantity;
+
     //Constructors
     SearchBook(String scanned){
         isbn = scanned;
@@ -27,11 +29,12 @@ public class SearchBook {
         price = "";
     }
 
-    SearchBook(String scanned, String t, String a, String p){
+    SearchBook(String scanned, String t, String a, String p, int q){
         isbn = scanned;
         title =t;
         author =a;
         price =p;
+        quantity = q;
     }
     public String getTitle() {
         return title;
@@ -49,6 +52,8 @@ public class SearchBook {
         return price;
     }
 
+    public int getQuantity(){return quantity;}
+
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -61,13 +66,16 @@ public class SearchBook {
         this.title = title;
     }
 
+    public void setQuantity(int quantity){this.quantity=quantity;}
+
     @Override
     public String toString() {
         return "Book Result \n" +
                 "ISBN= " + isbn + '\n' +
                 "Title= " + title + '\n' +
                 "Author= " + author + '\n' +
-                "Price= $" + price + '\n';
+                "Price= $" + price + '\n'+
+                "Available Quantity= "+quantity+ '\n';
     }
 }
 

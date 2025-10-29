@@ -15,6 +15,15 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".SubmitBook"
+            android:exported="false" />
+        <activity
+            android:name=".displayOrder"
+            android:exported="false" />
+        <activity
+            android:name=".orderInquiry"
+            android:exported="false" />
+        <activity
             android:name=".processOrders"
             android:exported="false" />
         <activity

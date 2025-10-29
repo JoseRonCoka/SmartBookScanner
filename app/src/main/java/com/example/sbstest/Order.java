@@ -20,15 +20,17 @@ public class Order implements Serializable {
     private String customerPhone;
     private String customerAddress;
     private String bookISBN;
-    private String quantityBook;
+    private int quantityBook;
     private String orderID;
     private String bookTitle;
     private String bookAuthor;
     private String orderCost;
     private String bookPrice;
 
+    private String orderDate;
 
-    Order(String name, String email,String phone, String address, String book, String quantity ){
+
+    Order(String name, String email,String phone, String address, String book, int quantity ){
         customerName = name;
         emailAddress = email;
         customerPhone = phone;
@@ -38,19 +40,23 @@ public class Order implements Serializable {
 
     }
 
+    // Empty constructor required for Firebase
+    public Order() {}
 
-    Order(String ID, String name, String email, String phone, String address, String book, String orderPrice, String quantity ){
+    //public Order(String ID, String name, String email, String phone, String address, String book, String orderPrice, String quantity ){
+    public Order(String ID, String name, String email, String phone, String address, String book, String title, String author, String price, String orderPrice, int quantity, String date ){
         orderID = ID;
         customerName = name;
         emailAddress = email;
         customerPhone = phone;
         customerAddress = address;
         bookISBN= book;
-        bookTitle= "";
-        bookAuthor = "";
-        bookPrice="";
+        bookTitle= title;
+        bookAuthor = author;
+        bookPrice= price;
         orderCost = orderPrice;
         quantityBook = quantity;
+        orderDate= date;
     }
     //Getters and Setters
 
@@ -72,7 +78,7 @@ public class Order implements Serializable {
         return bookISBN;
     }
 
-    public String getQuantityBook() {
+    public int getQuantityBook() {
         return quantityBook;
     }
     public String getOrderID() {
@@ -95,6 +101,8 @@ public class Order implements Serializable {
         return customerAddress;
     }
 
+    public String getOrderDate(){return orderDate;}
+
 
     public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
@@ -111,13 +119,15 @@ public class Order implements Serializable {
         this.bookISBN = bookISBN;
     }
 
-    public void setQuantityBook(String quantityBook) {
+    public void setQuantityBook(int quantityBook) {
         this.quantityBook = quantityBook;
     }
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
+
+    public void setOrderDate(String orderDate){this.orderDate=orderDate;}
 
     //Helper Function to print out Book details
     public String displayBookInfo(){
@@ -132,6 +142,7 @@ public class Order implements Serializable {
     public String toString() {
         return "Order Details: \n" +
                 "Customer Name= " + customerName + '\n' +
+                "Order Date= "+ orderDate + '\n'+
                 "Email Address= " + emailAddress + '\n' +
                 "Customer Phone Number= " + customerPhone + '\n' +
                 "Customer Address= " + customerAddress + '\n' +
