@@ -21,43 +21,100 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/bookStoreButton"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="65dp"
-        android:text="Book Store"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeOrderButton" />
-
-    <Button
-        android:id="@+id/placeOrderButton"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginEnd="65dp"
-        android:text="Submit Order"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/placeOrderButton"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.227"
         app:srcCompat="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="380dp"
+        android:layout_height="423dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <EditText
+            android:id="@+id/emailSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <EditText
+            android:id="@+id/passwordSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/radioGroupText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Please select your type of User:"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/customerRadio"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Customer"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/bookstoreRadio"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Bookstore"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/signInButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

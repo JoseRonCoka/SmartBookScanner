@@ -26,8 +26,15 @@ public class Order implements Serializable {
     private String bookAuthor;
     private String orderCost;
     private String bookPrice;
-
     private String orderDate;
+
+    //Optional elements
+    private String customerId;
+    private String employeeId;
+
+    private String processDate;
+
+    private String status;
 
 
     Order(String name, String email,String phone, String address, String book, int quantity ){
@@ -129,6 +136,39 @@ public class Order implements Serializable {
 
     public void setOrderDate(String orderDate){this.orderDate=orderDate;}
 
+    //ID Getters and Setters
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public String getProcessDate() {
+        return processDate;
+    }
+
+    public void setProcessDate(String processDate) {
+        this.processDate = processDate;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     //Helper Function to print out Book details
     public String displayBookInfo(){
         return "Book  \n" +
@@ -141,6 +181,7 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return "Order Details: \n" +
+                "Order Status= "+ status + '\n' +
                 "Customer Name= " + customerName + '\n' +
                 "Order Date= "+ orderDate + '\n'+
                 "Email Address= " + emailAddress + '\n' +
@@ -149,4 +190,7 @@ public class Order implements Serializable {
                 "Order Cost= " + orderCost+ '\n' +
                 "Copies of Book= " + quantityBook + '\n';
     }
+
+
+
 }

@@ -19,8 +19,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="375dp"
-        android:layout_height="296dp"
+        android:layout_width="376dp"
+        android:layout_height="380dp"
         android:layout_marginTop="104dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
@@ -66,6 +66,19 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:text="Submit Book" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <Button
+            android:id="@+id/logOutBookButton"
+            android:layout_width="220dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_red_dark"
+            android:text="Log Out" />
+
     </LinearLayout>
 
 

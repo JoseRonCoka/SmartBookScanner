@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.sbstest"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -39,11 +39,15 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    //Firebase realtime database
     implementation("com.google.firebase:firebase-database:20.3.1")
+    //Firebase authentication
+    implementation("com.firebaseui:firebase-ui-auth:9.0.0")
     implementation("androidx.activity:activity:1.8.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //Scanner functionality implementation
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
     //Desugaring, making date work in older Android devices.
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4") // use latest version

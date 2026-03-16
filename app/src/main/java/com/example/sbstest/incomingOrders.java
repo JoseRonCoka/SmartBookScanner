@@ -80,9 +80,13 @@ public class incomingOrders extends AppCompatActivity implements RecyclerViewInt
                     int quantity = orderSnapshot.child("quantityBook").getValue(Integer.class);
                     //int quantity = Integer.parseInt(quantityText);
                     String orderDate= orderSnapshot.child("orderDate").getValue(String.class);
+                    String orderStatus= orderSnapshot.child("status").getValue(String.class);
 
                     // Create an Order object with the data extracted
                     Order incomingOrder = new Order(orderID, name, email, phone, address, book, title, author, price, orderCost, quantity, orderDate);
+
+                    //Set incoming order status
+                    incomingOrder.setStatus(orderStatus);
 
                     //Used to extract book data from database, not needed anymore since book info is saved with order.
                     /*

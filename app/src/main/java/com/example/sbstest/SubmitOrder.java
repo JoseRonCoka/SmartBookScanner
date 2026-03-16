@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,8 +51,12 @@ public class SubmitOrder extends AppCompatActivity {
     //Database reference  to Book side.
     DatabaseReference bDatabase;
     DatabaseReference ordersRef;
+    DatabaseReference userRef;
 
     TextView textView4;
+
+    //Global Variables
+    String uid;
     //Hanldling Fee set to 5 USD
     double handlingFee=5.00;
     double tax=0.07;
@@ -76,6 +81,15 @@ public class SubmitOrder extends AppCompatActivity {
         bDatabase = FirebaseDatabase.getInstance().getReference().child("Books");
         //Database reference to Order side
         ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders"); // Reference to the "Orders" category
+
+        //Extract email from Database Authentication and set it into the Edit Text
+        FirebaseAuth userAuth = FirebaseAuth.getInstance();
+        String userEmail = userAuth.getCurrentUser().getEmail();
+        uid = userAuth.getCurrentUser().getUid();
+        emailAddress.setText(userEmail);
+
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
 
         //On CLick of submit button information in input fields is saved
         submitOrderButton.setOnClickListener(v->
@@ -106,7 +120,12 @@ public class SubmitOrder extends AppCompatActivity {
 
                         //Check if enough copies available
                         if (bQuantity < orderQ ){
-                            textView4.setText("Oh no! There are not enough available copies for the book you ordered. There are "+bQuantity+" available copies.");
+                            textView4.setText("Oh no! There are not enough available copies for the book you ordered. There are only "+bQuantity+" available copies.");
+                            bookISBN.setText("");
+                            quantityBook.setText("");
+                        }
+                        else if (bQuantity == 1){
+                            textView4.setText("Oh no! There are not enough available copies for the book you ordered. There is only "+bQuantity+" available copy.");
                             bookISBN.setText("");
                             quantityBook.setText("");
                         }
@@ -138,6 +157,7 @@ public class SubmitOrder extends AppCompatActivity {
                                 //Add Transaction to ensure never -1 on quantity. Users cannot make an order at the same time.
                                 tranSubmitOrder(isbn, orderQ, success -> {
                                     if (success == true) {
+                                        //If transaction to check available quantity succeeds we call the function to submit order to database
                                         submitOrderToDatabase(name, email, phone, address,isbn, title, author,p, totalPrice,orderQ);
                                     }
                                     else{
@@ -208,18 +228,26 @@ public class SubmitOrder extends AppCompatActivity {
     //Submit Order function. Takes order data and submits into the database using Transaction function.
     public void submitOrderToDatabase (String name, String email, String phone, String address, String isbn, String title, String author, String p, String totalPrice, int orderQ){
 
+        //Get date of order submission
         LocalDate myDateObj = LocalDate.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = myDateObj.format(myFormatObj);
 
-        //Generate random number and check if already on database.
+        //Generate random order number and check if already on database.
         String orderId=checkIfExists(generateOrderNumber());
         //Create Order object from the input info
         Order customerOrder = new Order(orderId, name, email, phone, address, isbn, title, author, p, totalPrice, orderQ , formattedDate);
 
+        //Set the customer Id value in the order object
+        customerOrder.setCustomerId(uid);
+        //Set order status in the order object
+        customerOrder.setStatus("In Progress");
+
         //Push the order object into the database
         ordersRef.child(orderId).setValue(customerOrder)
                 .addOnSuccessListener(aVoid -> {
+                    //Adding submitted order number to User in database
+                    userRef.child("submittedOrders").child(customerOrder.getOrderID()).setValue(0);
                     //textView4.setText("Order submitted successfully, your Order Details: "+customerOrder.toString()+" Order Number: " + orderId);
                     textView4.setText("Order submitted successfully on "+formattedDate+", your Order Number: " + orderId+" with total order price of $"+customerOrder.getOrderCost());
                     // Clear input fields if needed

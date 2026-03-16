@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class processOrders extends AppCompatActivity {
 
@@ -42,8 +46,10 @@ public class processOrders extends AppCompatActivity {
     //TEST BUTTON
     Button testProcessButton;
 
+    //Set Global Variables
     String scanned;
 
+    String employeeId;
 
     int copiesToScan=0;
     int copiesScanned=0;
@@ -52,6 +58,9 @@ public class processOrders extends AppCompatActivity {
     Order orderToProcess;
     SearchBook bookToProcess;
     private Scanner scannerHelper;
+
+    //Database reference
+    DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +99,12 @@ public class processOrders extends AppCompatActivity {
             scannedNum.setText("0");
         }
 
+        //Extract Employee Id from Database Authentication and set it into the Edit Text
+        FirebaseAuth userAuth = FirebaseAuth.getInstance();
+        //String userEmail = userAuth.getCurrentUser().getEmail();
+        employeeId = userAuth.getCurrentUser().getUid();
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(employeeId);
+
         //Set Scanner Functionality
         scanProcessButton= findViewById((R.id.processScan));
         scanProcessButton.setOnClickListener(v->
@@ -117,11 +132,11 @@ public class processOrders extends AppCompatActivity {
             orderID.setText("Order was completed. Good Job!");
 
             //Database references
-            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders"); // Reference to the "Orders" category
+            DatabaseReference incomingRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("IncomingOrders"); // Reference to the "Orders" category
             DatabaseReference processRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("ProcessedOrders");
 
             //Access Database to Move Order from Incoming Orders to Processed Orders
-            mDatabase.child(orderToProcess.getOrderID()).addListenerForSingleValueEvent(new ValueEventListener() {
+            incomingRef.child(orderToProcess.getOrderID()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
@@ -132,6 +147,16 @@ public class processOrders extends AppCompatActivity {
                         // Delete the data from the source location.
                         snapshot.getRef().removeValue();
 
+                        //Get date of order process.
+                        LocalDate myDateObj = LocalDate.now();
+                        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        String formattedDate = myDateObj.format(myFormatObj);
+
+                        processRef.child(orderToProcess.getOrderID()).child("employeeId").setValue(employeeId);
+                        processRef.child(orderToProcess.getOrderID()).child("processDate").setValue(formattedDate);
+                        processRef.child(orderToProcess.getOrderID()).child("status").setValue("Completed");
+
+                        userRef.child("processedOrders").child(orderToProcess.getOrderID()).setValue(0);
                         //Intent changed so App goes back to Incoming Orders and cannot return to order
                         Intent intent = new Intent(processOrders.this, incomingOrders.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
